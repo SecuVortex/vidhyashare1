@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Categories - VidyaShare</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .categories-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 100px 0 50px;
+        }
+        
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+        }
+        
+        .search-section {
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            padding: 0 20px;
+        }
+        
+        .search-container {
+            background: white;
+            border-radius: 50px;
+            padding: 10px 20px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .search-container input {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 1.1rem;
+            padding: 10px;
+        }
+        
+        .search-container button {
+            background: var(--gradient-primary);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: transform 0.3s;
+        }
+        
+        .search-container button:hover {
+            transform: scale(1.05);
+        }
+        
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 1.5rem;
+        }
+        
+        .filter-tag {
+            padding: 8px 20px;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .filter-tag:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .filter-tag.active {
+            background: var(--gradient-primary);
+            color: white;
+        }
+        
+        .categories-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .category-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .category-banner {
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3.5rem;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .category-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 100%);
+        }
+        
+        .category-banner i {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .academic-banner { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .fiction-banner { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .anime-banner { background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); }
+        .horror-banner { background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); }
+        .romance-banner { background: linear-gradient(135deg, #ff6a88 0%, #ff99ac 100%); }
+        .technology-banner { background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); }
+        .business-banner { background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); }
+        .selfhelp-banner { background: linear-gradient(135deg, #ffd89b 0%, #19547b 100%); }
+        .science-banner { background: linear-gradient(135deg, #13547a 0%, #80d0c7 100%); }
+        .history-banner { background: linear-gradient(135deg, #8e44ad 0%, #c0392b 100%); }
+        .biography-banner { background: linear-gradient(135deg, #f857a6 0%, #ff5858 100%); }
+        .children-banner { background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); }
+        
+        .category-content {
+            padding: 1.5rem;
+        }
+        
+        .category-content h3 {
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.3rem;
+        }
+        
+        .category-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .stat i {
+            color: var(--primary-color);
+        }
+        
+        .category-description {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        
+        .popular-books {
+            margin-top: 1rem;
+        }
+        
+        .popular-books h4 {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 0.5rem;
+        }
+        
+        .book-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .book-tag {
+            padding: 4px 10px;
+            background: var(--light-color);
+            border-radius: 10px;
+            font-size: 0.8rem;
+            color: var(--text-color);
+        }
+        
+        .view-all-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            color: var(--primary-color);
+            font-weight: 500;
+            margin-top: 1rem;
+            transition: gap 0.3s;
+        }
+        
+        .view-all-btn:hover {
+            gap: 10px;
+        }
+        
+        .trending-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .trending-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .trending-header h2 {
+            color: var(--dark-color);
+        }
+        
+        .trending-books {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .trending-book {
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .trending-book:hover {
+            transform: scale(1.05);
+        }
+        
+        .book-cover {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #e0e0e0 0%, #f5f5f5 100%);
+            border-radius: 10px;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--text-light);
+        }
+        
+        .book-title {
+            font-size: 0.9rem;
+            color: var(--dark-color);
+            font-weight: 500;
+            margin-bottom: 0.25rem;
+        }
+        
+        .book-price {
+            color: var(--success-color);
+            font-weight: 600;
+        }
+        
+        @media (max-width: 768px) {
+            .page-header h1 {
+                font-size: 2rem;
+            }
+            
+            .categories-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .trending-books {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo-section">
+                    <a href="../index.html" style="display: flex; align-items: center; gap: 10px;">
+                        <img src="../images/logo.svg" alt="VidyaShare" class="logo">
+                        <span class="logo-text">VidyaShare</span>
+                    </a>
+                </div>
+                <div class="nav-menu" id="navMenu">
+                    <ul class="nav-list">
+                        <li><a href="../index.html" class="nav-link">Home</a></li>
+                        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                        <li><a href="categories.html" class="nav-link active">Browse Books</a></li>
+                        <li><a href="sell-book.html" class="nav-link">Sell/Rent</a></li>
+                        <li><a href="premium.html" class="nav-link premium-link">
+                            <i class="fas fa-crown"></i> Premium
+                        </a></li>
+                    </ul>
+                </div>
+                <div class="nav-actions">
+                    <button class="btn-login" onclick="window.VidyaShare.openLoginModal()">
+                        <i class="fas fa-user"></i> Login
+                    </button>
+                    <div class="hamburger" id="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Categories Page Content -->
+    <div class="categories-page">
+        <!-- Page Header -->
+        <div class="page-header animate-fade-in">
+            <h1>Explore Book Categories</h1>
+            <p>Choose from our vast collection across multiple genres</p>
+        </div>
+        
+        <!-- Search Section -->
+        <div class="search-section animate-fade-in-delay">
+            <div class="search-container">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search for books, authors, or ISBN...">
+                <button>Search</button>
+            </div>
+            
+            <div class="filter-tags">
+                <span class="filter-tag active">All</span>
+                <span class="filter-tag">Most Popular</span>
+                <span class="filter-tag">New Arrivals</span>
+                <span class="filter-tag">Best Deals</span>
+                <span class="filter-tag">Premium Only</span>
+            </div>
+        </div>
+        
+        <!-- Categories Grid -->
+        <div class="categories-container">
+            <div class="categories-grid">
+                <!-- Academic Category -->
+                <a href="book-list.html?category=academic" class="category-card animate-on-scroll">
+                    <div class="category-banner academic-banner">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Academic</h3>
+                        <div class="category-stats">
+                            <span class="stat"><i class="fas fa-book"></i> 3,500+ Books</span>
+                            <span class="stat"><i class="fas fa-fire"></i> Most Popular</span>
+                        </div>
+                        <p class="category-description">
+                            Engineering, Medical, Science, Mathematics, and all academic textbooks
+                        </p>
+                        <div class="popular-books">
+                            <h4>Popular:</h4>
+                            <div class="book-tags">
+                                <span class="book-tag">Engineering</span>
+                                <span class="book-tag">MBBS</span>
+                                <span class="book-tag">JEE/NEET</span>
+                            </div>
+                        </div>
+                        <span class="view-all-btn">
+                            Browse Academic <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- Fiction Category -->
+                <a href="book-list.html?category=fiction" class="category-card animate-on-scroll">
+                    <div class="category-banner fiction-banner">
+                        <i class="fas fa-dragon"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Fiction</h3>
+                        <div class="category-stats">
+                            <span class="stat"><i class="fas fa-book"></i> 2,000+ Books</span>
+                            <span class="stat"><i class="fas fa-star"></i> 4.7 Rating</span>
+                        </div>
+                        <p class="category-description">
+                            Fantasy, Sci-Fi, Mystery, Thrillers, and imaginative stories
+                        </p>
+                        <div class="popular-books">
+                            <h4>Popular:</h4>
+                            <div class="book-tags">
+                                <span class="book-tag">Harry Potter</span>
+                                <span class="book-tag">LOTR</span>
+                                <span class="book-tag">Dune</span>
+                            </div>
+                        </div>
+                        <span class="view-all-btn">
+                            Browse Fiction <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- Anime/Manga Category -->
+                <a href="book-list.html?category=anime" class="category-card animate-on-scroll">
+                    <div class="category-banner anime-banner">
+                        <i class="fas fa-tv"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Anime & Manga</h3>
+                        <div class="category-stats">
+                            <span class="stat"><i class="fas fa-book"></i> 1,500+ Books</span>
+                            <span class="stat"><i class="fas fa-heart"></i> Fan Favorite</span>
+                        </div>
+                        <p class="category-description">
+                            Japanese manga, light novels, anime art books, and graphic novels
+                        </p>
+                        <div class="popular-books">
+                            <h4>Popular:</h4>
+                            <div class="book-tags">
+                                <span class="book-tag">One Piece</span>
+                                <span class="book-tag">Naruto</span>
+                                <span class="book-tag">Death Note</span>
+                            </div>
+                        </div>
+                        <span class="view-all-btn">
+                            Browse Anime <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- Horror Category -->
+                <a href="book-list.html?category=horror" class="category-card animate-on-scroll">
+                    <div class="category-banner horror-banner">
+                        <i class="fas fa-ghost"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Horror</h3>
+                        <div class="category-stats">
+                            <span class="stat"><i class="fas fa-book"></i> 800+ Books</span>
+                            <span class="stat"><i class="fas fa-skull"></i> Spine-chilling</span>
+                        </div>
+                        <p class="category-description">
+                            Scary stories, psychological thrillers, supernatural tales
+                        </p>
+                        <div class="popular-books">
+                            <h4>Popular:</h4>
+                            <div class="book-tags">
+                                <span class="book-tag">Stephen King</span>
+                                <span class="book-tag">IT</span>
+                                <span class="book-tag">The Shining</span>
+                            </div>
+                        </div>
+                        <span class="view-all-btn">
+                            Browse Horror <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- Romance Category -->
+                <a href="book-list.html?category=romance" class="category-card animate-on-scroll">
+                    <div class="category-banner romance-banner">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Romance</h3>
+                        <div class="category-stats">
+                            <span class="stat"><i class="fas fa-book"></i> 1,200+ Books</span>
+                            <span class="stat"><i class="fas fa-heart"></i> Love Stories</span>
+                        </div>
+                        <p class="category-description">
+                            Contemporary romance, historical romance, romantic comedies
+                        </p>
+                        <div class="popular-books">
+                            <h4>Popular:</h4>
+                            <div class="book-tags">
+                                <span class="book-tag">Nicholas Sparks</span>
+                                <span class="book-tag">Pride & Prejudice</span>
+                            </div>
+                        </div>
+                        <span class="view-all-btn">
+                            Browse Romance <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- Technology Category -->
+                <a href="book-list.html?category=technology" class="category-card animate-on-scroll">
+                    <div class="category-banner technology-banner">
+                        <i class="fas fa-laptop-code"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Technology</h3>
+                        <div class="category-stats">
+                            <span class="stat"><i class="fas fa-book"></i> 1,800+ Books</span>
+                            <span class="stat"><i class="fas fa-trending-up"></i> Trending</span>
+                        </div>
+                        <p class="category-description">
+                            Programming, AI/ML, Web Development, Data Science
+                        </p>
+                        <div class="popular-books">
+                            <h4>Popular:</h4>
+                            <div class="book-tags">
+                                <span class="book-tag">Python</span>
+                                <span class="book-tag">JavaScript</span>
+                                <span class="book-tag">AI/ML</span>
+                            </div>
+                        </div>
+                        <span class="view-all-btn">
+                            Browse Technology <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- Business Category -->
+                <a href="book-list.html?category=business" class="category-card animate-on-scroll">
+                    <div class="category-banner business-banner">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Business</h3>
+                        <div class="category-stats">
+                            <span class="stat"><i class="fas fa-book"></i> 900+ Books</span>
+                            <span class="stat"><i class="fas fa-chart-line"></i> Success</span>
+                        </div>
+                        <p class="category-description">
+                            Entrepreneurship, Finance, Marketing, Management
+                        </p>
+                        <div class="popular-books">
+                            <h4>Popular:</h4>
+                            <div class="book-tags">
+                                <span class="book-tag">Rich Dad Poor Dad</span>
+                                <span class="book-tag">Zero to One</span>
+                            </div>
+                        </div>
+                        <span class="view-all-btn">
+                            Browse Business <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- Self-Help Category -->
+                <a href="book-list.html?category=selfhelp" class="category-card animate-on-scroll">
+                    <div class="category-banner selfhelp-banner">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Self-Help</h3>
+                        <div class="category-stats">
+                            <span class="stat"><i class="fas fa-book"></i> 700+ Books</span>
+                            <span class="stat"><i class="fas fa-lightbulb"></i> Inspiring</span>
+                        </div>
+                        <p class="category-description">
+                            Personal development, Motivation, Psychology, Habits
+                        </p>
+                        <div class="popular-books">
+                            <h4>Popular:</h4>
+                            <div class="book-tags">
+                                <span class="book-tag">Atomic Habits</span>
+                                <span class="book-tag">Think & Grow Rich</span>
+                            </div>
+                        </div>
+                        <span class="view-all-btn">
+                            Browse Self-Help <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- Science Category -->
+                <a href="book-list.html?category=science" class="category-card animate-on-scroll">
+                    <div class="category-banner science-banner">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="category-content">
+                        <h3>Science</h3>
+                        <div class="category-stats">
+                            <span class="stat"><i class="fas fa-book"></i> 1,100+ Books</span>
+                            <span class="stat"><i class="fas fa-atom"></i> Discover</span>
+                        </div>
+                        <p class="category-description">
+                            Physics, Chemistry, Biology, Space, Popular Science
+                        </p>
+                        <div class="popular-books">
+                            <h4>Popular:</h4>
+                            <div class="book-tags">
+                                <span class="book-tag">Brief History of Time</span>
+                                <span class="book-tag">Cosmos</span>
+                            </div>
+                        </div>
+                        <span class="view-all-btn">
+                            Browse Science <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+            </div>
+            
+            <!-- Trending Books Section -->
+            <div class="trending-section">
+                <div class="trending-header">
+                    <h2>Trending This Week</h2>
+                    <a href="book-list.html?filter=trending" style="color: var(--primary-color);">View All</a>
+                </div>
+                
+                <div class="trending-books">
+                    <div class="trending-book">
+                        <div class="book-cover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="book-title">Data Structures</div>
+                        <div class="book-price">₹150/month</div>
+                    </div>
+                    
+                    <div class="trending-book">
+                        <div class="book-cover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="book-title">One Piece Vol. 1</div>
+                        <div class="book-price">₹50/month</div>
+                    </div>
+                    
+                    <div class="trending-book">
+                        <div class="book-cover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="book-title">Atomic Habits</div>
+                        <div class="book-price">₹75/month</div>
+                    </div>
+                    
+                    <div class="trending-book">
+                        <div class="book-cover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="book-title">The Alchemist</div>
+                        <div class="book-price">₹60/month</div>
+                    </div>
+                    
+                    <div class="trending-book">
+                        <div class="book-cover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="book-title">Rich Dad Poor Dad</div>
+                        <div class="book-price">₹80/month</div>
+                    </div>
+                    
+                    <div class="trending-book">
+                        <div class="book-cover">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="book-title">Python Programming</div>
+                        <div class="book-price">₹120/month</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/main.js"></script>
+    <script>
+        // Filter tag functionality
+        document.querySelectorAll('.filter-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

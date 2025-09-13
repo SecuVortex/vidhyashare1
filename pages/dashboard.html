@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - VidyaShare</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link rel="stylesheet" href="../css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="../js/api.js"></script>
+    <style>
+        .dashboard-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding-top: 80px;
+        }
+        
+        .dashboard-header {
+            background: white;
+            padding: 2rem 0;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 3rem;
+        }
+        
+        .dashboard-header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .welcome-section h1 {
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .welcome-section p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+        }
+        
+        .main-actions {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .action-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        .action-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        .action-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+        }
+        
+        .card-image {
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+        }
+        
+        .rent-card .card-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .sell-card .card-image {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .card-content {
+            padding: 2rem;
+        }
+        
+        .card-content h2 {
+            color: var(--dark-color);
+            margin-bottom: 1rem;
+        }
+        
+        .card-content p {
+            color: var(--text-light);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+        
+        .card-features li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+        }
+        
+        .card-features i {
+            color: var(--success-color);
+        }
+        
+        .card-action {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 30px;
+            background: var(--gradient-primary);
+            color: white;
+            border-radius: 30px;
+            font-weight: 500;
+            transition: transform 0.3s;
+        }
+        
+        .card-action:hover {
+            transform: translateX(5px);
+        }
+        
+        .quick-stats {
+            max-width: 1200px;
+            margin: 0 auto 3rem;
+            padding: 0 20px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        
+        .stat-card:nth-child(1) .stat-icon {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .stat-card:nth-child(2) .stat-icon {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+        
+        .stat-card:nth-child(3) .stat-icon {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+        
+        .stat-card:nth-child(4) .stat-icon {
+            background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+        }
+        
+        .stat-info h3 {
+            font-size: 1.5rem;
+            color: var(--dark-color);
+            margin-bottom: 0.25rem;
+        }
+        
+        .stat-info p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .recent-activity {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .activity-header h2 {
+            color: var(--dark-color);
+        }
+        
+        .activity-list {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--light-color);
+            color: var(--primary-color);
+        }
+        
+        .activity-details {
+            flex: 1;
+        }
+        
+        .activity-details h4 {
+            color: var(--dark-color);
+            margin-bottom: 0.25rem;
+        }
+        
+        .activity-details p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        .activity-time {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard-header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .action-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo-section">
+                    <a href="../index.html" style="display: flex; align-items: center; gap: 10px;">
+                        <img src="../images/logo.svg" alt="VidyaShare" class="logo">
+                        <span class="logo-text">VidyaShare</span>
+                    </a>
+                </div>
+                <div class="nav-menu" id="navMenu">
+                    <ul class="nav-list">
+                        <li><a href="../index.html" class="nav-link">Home</a></li>
+                        <li><a href="categories.html" class="nav-link">Browse Books</a></li>
+                        <li><a href="my-books.html" class="nav-link">My Books</a></li>
+                        <li><a href="transactions.html" class="nav-link">Transactions</a></li>
+                        <li><a href="premium.html" class="nav-link premium-link">
+                            <i class="fas fa-crown"></i> Premium
+                        </a></li>
+                        <li><a href="profile.html" class="nav-link">Profile</a></li>
+                    </ul>
+                </div>
+                <div class="nav-actions">
+                    <a href="notifications.html" class="notification-bell">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </a>
+                    <button class="btn-login" onclick="logout()" style="background: #ff4757; border: none; padding: 8px 16px; border-radius: 20px; color: white; cursor: pointer;">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                    <div class="hamburger" id="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    <!-- Dashboard Content -->
+    <div class="dashboard-page">
+        <!-- Welcome Header -->
+        <div class="dashboard-header">
+            <div class="dashboard-header-content">
+                <div class="welcome-section">
+                    <h1>Welcome back, Student! 👋</h1>
+                    <p>What would you like to do today?</p>
+                </div>
+                <div class="user-info">
+                    <div class="user-credits">
+                        <p style="margin: 0; color: var(--text-light);">Wallet Balance</p>
+                        <h3 style="margin: 0; color: var(--success-color);">₹500</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Main Action Cards -->
+        <div class="main-actions">
+            <div class="action-cards">
+                <!-- Rent a Book Card -->
+                <a href="categories.html" class="action-card rent-card animate-fade-in">
+                    <div class="card-image">
+                        <i class="fas fa-book-reader"></i>
+                    </div>
+                    <div class="card-content">
+                        <h2>Rent a Book</h2>
+                        <p>Browse through thousands of books available for rent at just 15% of MRP per month.</p>
+                        <ul class="card-features">
+                            <li><i class="fas fa-check-circle"></i> 10,000+ books available</li>
+                            <li><i class="fas fa-check-circle"></i> Save up to 85% on costs</li>
+                            <li><i class="fas fa-check-circle"></i> Doorstep delivery</li>
+                            <li><i class="fas fa-check-circle"></i> Quality guaranteed</li>
+                        </ul>
+                        <span class="card-action">
+                            Browse Books <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+                
+                <!-- Sell/Lend a Book Card -->
+                <a href="sell-book.html" class="action-card sell-card animate-fade-in-delay">
+                    <div class="card-image">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <div class="card-content">
+                        <h2>Sell or Lend Your Book</h2>
+                        <p>Turn your old textbooks into cash. List them for sale or rent and earn money.</p>
+                        <ul class="card-features">
+                            <li><i class="fas fa-check-circle"></i> Set your own price</li>
+                            <li><i class="fas fa-check-circle"></i> Secure payments</li>
+                            <li><i class="fas fa-check-circle"></i> Easy listing process</li>
+                            <li><i class="fas fa-check-circle"></i> Track earnings</li>
+                        </ul>
+                        <span class="card-action">
+                            List Your Book <i class="fas fa-arrow-right"></i>
+                        </span>
+                    </div>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Quick Stats -->
+        <div class="quick-stats">
+            <h2 style="margin-bottom: 1.5rem; color: var(--dark-color);">Your Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>5</h3>
+                        <p>Books Rented</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>₹2,500</h3>
+                        <p>Total Saved</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>3</h3>
+                        <p>Books Listed</p>
+                    </div>
+                </div>
+                
+                <div class="stat-card animate-on-scroll">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="stat-info">
+                        <h3>4.8</h3>
+                        <p>Your Rating</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Recent Activity -->
+        <div class="recent-activity">
+            <div class="activity-header">
+                <h2>Recent Activity</h2>
+                <a href="transactions.html" style="color: var(--primary-color);">View All</a>
+            </div>
+            
+            <div class="activity-list">
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <div class="activity-details">
+                        <h4>Rented "Data Structures & Algorithms"</h4>
+                        <p>By Thomas H. Cormen</p>
+                    </div>
+                    <div class="activity-time">2 hours ago</div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-hand-holding-usd"></i>
+                    </div>
+                    <div class="activity-details">
+                        <h4>Listed "Physics for Engineers" for rent</h4>
+                        <p>Set price: ₹150/month</p>
+                    </div>
+                    <div class="activity-time">Yesterday</div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="activity-details">
+                        <h4>Received 5-star review</h4>
+                        <p>For "Engineering Mathematics Vol. 1"</p>
+                    </div>
+                    <div class="activity-time">3 days ago</div>
+                </div>
+                
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="activity-details">
+                        <h4>Payment received</h4>
+                        <p>₹450 for "Chemistry Textbook" rental</p>
+                    </div>
+                    <div class="activity-time">1 week ago</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/main.js"></script>
+    <script>
+        // Check authentication on page load
+        if (!window.checkAuth()) {
+            window.location.href = '../index.html';
+        }
+        
+        // Logout function
+        function logout() {
+            window.api.logout();
+        }
+        
+        // Load user data
+        async function loadUserData() {
+            try {
+                const response = await window.api.getUserProfile();
+                if (response.user) {
+                    document.querySelector('.welcome-section h1').textContent = 
+                        `Welcome back, ${response.user.firstName}! 👋`;
+                    document.querySelector('.user-credits h3').textContent = 
+                        `₹${response.user.walletBalance || 0}`;
+                }
+            } catch (error) {
+                console.error('Failed to load user data:', error);
+            }
+        }
+        
+        // Load user data on page load
+        document.addEventListener('DOMContentLoaded', loadUserData);
+        // Add any dashboard-specific JavaScript here
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate stats on scroll
+            const stats = document.querySelectorAll('.stat-info h3');
+            stats.forEach(stat => {
+                const value = stat.textContent;
+                if (value.includes('₹')) {
+                    // Handle currency values
+                    const num = parseInt(value.replace('₹', '').replace(',', ''));
+                    animateValue(stat, 0, num, 2000, '₹');
+                } else if (value.includes('.')) {
+                    // Handle decimal values
+                    const num = parseFloat(value);
+                    animateDecimalValue(stat, 0, num, 2000);
+                } else {
+                    // Handle integer values
+                    const num = parseInt(value);
+                    animateValue(stat, 0, num, 2000);
+                }
+            });
+        });
+        
+        function animateValue(obj, start, end, duration, prefix = '') {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = Math.floor(progress * (end - start) + start);
+                obj.textContent = prefix + value.toLocaleString('en-IN');
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+        
+        function animateDecimalValue(obj, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                const value = progress * (end - start) + start;
+                obj.textContent = value.toFixed(1);
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - VidyaShare</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .register-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .register-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            max-width: 1000px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+        
+        .register-image {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 3rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+        
+        .register-image h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .register-image p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .benefits-list {
+            text-align: left;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .benefits-list li {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+        
+        .benefits-list i {
+            color: #FFD700;
+        }
+        
+        .register-form-container {
+            padding: 3rem;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .form-header h3 {
+            color: var(--dark-color);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-header p {
+            color: var(--text-light);
+        }
+        
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+        
+        .form-group label span {
+            color: var(--danger-color);
+        }
+        
+        .interests-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .interest-chip {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .interest-chip input {
+            display: none;
+        }
+        
+        .interest-chip.selected {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .form-footer {
+            margin-top: 2rem;
+            text-align: center;
+        }
+        
+        .terms-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            justify-content: center;
+        }
+        
+        @media (max-width: 768px) {
+            .register-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .register-image {
+                padding: 2rem;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="register-page">
+        <div class="register-container animate-fade-in">
+            <div class="register-image">
+                <i class="fas fa-book-open" style="font-size: 4rem; margin-bottom: 1rem;"></i>
+                <h2>Join VidyaShare</h2>
+                <p>Start your journey of learning and earning today!</p>
+                
+                <ul class="benefits-list">
+                    <li><i class="fas fa-check-circle"></i> Save up to 85% on textbooks</li>
+                    <li><i class="fas fa-check-circle"></i> Earn from your old books</li>
+                    <li><i class="fas fa-check-circle"></i> Access to 10,000+ books</li>
+                    <li><i class="fas fa-check-circle"></i> Secure transactions</li>
+                    <li><i class="fas fa-check-circle"></i> Join 50,000+ students</li>
+                </ul>
+            </div>
+            
+            <div class="register-form-container">
+                <div class="form-header">
+                    <h3>Create Your Account</h3>
+                    <p>Fill in your details to get started</p>
+                </div>
+                
+                <form id="registerForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="firstName">First Name <span>*</span></label>
+                            <input type="text" id="firstName" name="firstName" required placeholder="John">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="lastName">Last Name <span>*</span></label>
+                            <input type="text" id="lastName" name="lastName" required placeholder="Doe">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="email">Email Address <span>*</span></label>
+                            <input type="email" id="email" name="email" required placeholder="john.doe@example.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number <span>*</span></label>
+                            <input type="tel" id="phone" name="phone" required placeholder="+91 98765 43210" pattern="[0-9]{10}">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" id="dob" name="dob">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="address">Full Address <span>*</span></label>
+                            <textarea id="address" name="address" rows="3" required placeholder="House No., Street, City, State, PIN"></textarea>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="city">City <span>*</span></label>
+                            <input type="text" id="city" name="city" required placeholder="Mumbai">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="pincode">PIN Code <span>*</span></label>
+                            <input type="text" id="pincode" name="pincode" required placeholder="400001" pattern="[0-9]{6}">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label for="college">College/University</label>
+                            <input type="text" id="college" name="college" placeholder="IIT Bombay">
+                        </div>
+                        
+                        <div class="form-group full-width">
+                            <label>Select Your Interests <span>*</span></label>
+                            <div class="interests-grid">
+                                <label class="interest-chip">
+                                    <input type="checkbox" name="interests" value="academic">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>Academic</span>
+                                </label>
+                                <label class="interest-chip">
+                                    <input type="checkbox" name="interests" value="fiction">
+                                    <i class="fas fa-dragon"></i>
+                                    <span>Fiction</span>
+                                </label>
+                                <label class="interest-chip">
+                                    <input type="checkbox" name="interests" value="anime">
+                                    <i class="fas fa-tv"></i>
+                                    <span>Anime/Manga</span>
+                                </label>
+                                <label class="interest-chip">
+                                    <input type="checkbox" name="interests" value="horror">
+                                    <i class="fas fa-ghost"></i>
+                                    <span>Horror</span>
+                                </label>
+                                <label class="interest-chip">
+                                    <input type="checkbox" name="interests" value="romance">
+                                    <i class="fas fa-heart"></i>
+                                    <span>Romance</span>
+                                </label>
+                                <label class="interest-chip">
+                                    <input type="checkbox" name="interests" value="technology">
+                                    <i class="fas fa-laptop-code"></i>
+                                    <span>Technology</span>
+                                </label>
+                                <label class="interest-chip">
+                                    <input type="checkbox" name="interests" value="business">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>Business</span>
+                                </label>
+                                <label class="interest-chip">
+                                    <input type="checkbox" name="interests" value="selfhelp">
+                                    <i class="fas fa-brain"></i>
+                                    <span>Self-Help</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password">Password <span>*</span></label>
+                            <input type="password" id="password" name="password" required placeholder="Min 8 characters">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password <span>*</span></label>
+                            <input type="password" id="confirmPassword" name="confirmPassword" required placeholder="Re-enter password">
+                        </div>
+                    </div>
+                    
+                    <div class="form-footer">
+                        <div class="terms-checkbox">
+                            <input type="checkbox" id="terms" name="terms" required>
+                            <label for="terms">I agree to the <a href="terms.html">Terms & Conditions</a> and <a href="privacy.html">Privacy Policy</a></label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-large btn-full">
+                            <i class="fas fa-user-plus"></i> Create Account
+                        </button>
+                        
+                        <p style="margin-top: 1rem;">
+                            Already have an account? <a href="../index.html" onclick="window.VidyaShare.openLoginModal(); return false;">Login here</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script src="../js/main.js"></script>
+    <script>
+        // Interest chip selection
+        document.querySelectorAll('.interest-chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                this.classList.toggle('selected');
+            });
+        });
+        
+        // Form submission
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate passwords match
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long!');
+                return;
+            }
+            
+            // Get selected interests
+            const interests = [];
+            document.querySelectorAll('.interest-chip.selected input').forEach(input => {
+                interests.push(input.value);
+            });
+            
+            if (interests.length === 0) {
+                alert('Please select at least one interest!');
+                return;
+            }
+            
+            // Here you would normally send data to backend
+            console.log('Registration data:', {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                interests: interests
+            });
+            
+            // Show success message
+            alert('Registration successful! Redirecting to dashboard...');
+            
+            // Redirect to dashboard
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

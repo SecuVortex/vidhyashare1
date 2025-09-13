@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - VidyaShare</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/animations.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .about-page {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 100px 0 50px;
+        }
+        
+        .hero-section {
+            text-align: center;
+            margin-bottom: 4rem;
+            color: var(--dark-color);
+        }
+        
+        .hero-section h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .mission-section {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            margin: 0 20px 3rem;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .stats-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto 3rem;
+            padding: 0 20px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .team-section {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .team-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .team-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="nav-container">
+                <div class="logo-section">
+                    <a href="../index.html" style="display: flex; align-items: center; gap: 10px;">
+                        <img src="../images/logo.svg" alt="VidyaShare" class="logo">
+                        <span class="logo-text">VidyaShare</span>
+                    </a>
+                </div>
+                <div class="nav-menu" id="navMenu">
+                    <ul class="nav-list">
+                        <li><a href="../index.html" class="nav-link">Home</a></li>
+                        <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                        <li><a href="categories.html" class="nav-link">Browse Books</a></li>
+                        <li><a href="about.html" class="nav-link active">About</a></li>
+                        <li><a href="contact.html" class="nav-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="nav-actions">
+                    <button class="btn-login" onclick="window.VidyaShare.openLoginModal()">
+                        <i class="fas fa-user"></i> Login
+                    </button>
+                    <div class="hamburger" id="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="about-page">
+        <!-- Hero Section -->
+        <div class="hero-section animate-fade-in">
+            <h1>About VidyaShare</h1>
+            <p style="font-size: 1.2rem; color: var(--text-light);">Revolutionizing education through affordable book sharing</p>
+        </div>
+
+        <!-- Mission Section -->
+        <div class="mission-section animate-fade-in-delay">
+            <h2 style="color: var(--dark-color); text-align: center; margin-bottom: 2rem;">Our Mission</h2>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-color); margin-bottom: 2rem;">
+                At VidyaShare, we believe that knowledge should be accessible to all. We're on a mission to make education 
+                more affordable by creating India's largest community of students who share, rent, and sell textbooks.
+            </p>
+            <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-color); margin-bottom: 2rem;">
+                Founded by students, for students, we understand the financial burden of expensive textbooks. That's why 
+                we've created a platform where you can rent books at just 15% of their MRP per month, helping you save 
+                up to 85% on your educational expenses.
+            </p>
+            <div style="text-align: center;">
+                <h3 style="color: var(--primary-color); margin-bottom: 1rem;">Our Values</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem;">
+                    <div style="text-align: center;">
+                        <i class="fas fa-heart" style="font-size: 2rem; color: var(--secondary-color); margin-bottom: 0.5rem;"></i>
+                        <h4>Community First</h4>
+                        <p>Building connections between students</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-shield-alt" style="font-size: 2rem; color: var(--success-color); margin-bottom: 0.5rem;"></i>
+                        <h4>Trust & Security</h4>
+                        <p>Safe and secure transactions</p>
+                    </div>
+                    <div style="text-align: center;">
+                        <i class="fas fa-lightbulb" style="font-size: 2rem; color: var(--warning-color); margin-bottom: 0.5rem;"></i>
+                        <h4>Innovation</h4>
+                        <p>Continuously improving education access</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="stats-section">
+            <div class="stat-card animate-on-scroll">
+                <div class="stat-number">50,000+</div>
+                <p>Happy Students</p>
+            </div>
+            <div class="stat-card animate-on-scroll">
+                <div class="stat-number">10,000+</div>
+                <p>Books Available</p>
+            </div>
+            <div class="stat-card animate-on-scroll">
+                <div class="stat-number">₹5L+</div>
+                <p>Total Saved</p>
+            </div>
+            <div class="stat-card animate-on-scroll">
+                <div class="stat-number">500+</div>
+                <p>Cities Covered</p>
+            </div>
+        </div>
+
+        <!-- Team Section -->
+        <div class="team-section">
+            <h2 style="text-align: center; color: var(--dark-color); margin-bottom: 2rem;">Meet Our Team</h2>
+            <div class="team-grid">
+                <div class="team-card animate-on-scroll">
+                    <div class="team-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h4>Founder & CEO</h4>
+                    <p style="color: var(--text-light);">Engineering Student</p>
+                    <p style="font-size: 0.9rem; margin-top: 1rem;">
+                        Passionate about making education accessible and building solutions for student communities.
+                    </p>
+                </div>
+                <div class="team-card animate-on-scroll">
+                    <div class="team-avatar">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h4>Tech Team</h4>
+                    <p style="color: var(--text-light);">Development</p>
+                    <p style="font-size: 0.9rem; margin-top: 1rem;">
+                        Building robust, scalable technology to serve our growing community of students.
+                    </p>
+                </div>
+                <div class="team-card animate-on-scroll">
+                    <div class="team-avatar">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h4>Community</h4>
+                    <p style="color: var(--text-light);">Support</p>
+                    <p style="font-size: 0.9rem; margin-top: 1rem;">
+                        Dedicated to providing excellent support and building strong student relationships.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>

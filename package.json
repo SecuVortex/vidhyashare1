@@ -1,0 +1,30 @@
+{
+  "name": "vidyashare",
+  "version": "1.0.0",
+  "description": "VidyaShare - Learn and Earn Platform",
+  "type": "module",
+  "main": "api/index.js",
+  "scripts": {
+    "start": "node api/index.js",
+    "dev": "vercel dev",
+    "build": "echo 'No build step required'"
+  },
+  "keywords": [
+    "book-rental",
+    "education",
+    "marketplace"
+  ],
+  "author": "VidyaShare Team",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "mongoose": "^7.5.0",
+    "cors": "^2.8.5",
+    "body-parser": "^1.20.2",
+    "bcryptjs": "^2.4.3",
+    "jsonwebtoken": "^9.0.2"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}
